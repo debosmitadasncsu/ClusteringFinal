@@ -151,3 +151,35 @@ ggplot(data=fdata_compare) +
   ylab("Mean Spirometry") +
   labs(color = "Procedure", title = "Lung Capacity - Comparison") +
   theme(plot.title = element_text(hjust = 0.5))
+
+# Compare most similar clusters
+similar <- rbind(cdata_agg[3,2:66],cdataBIC_agg[6,2:66])
+similar <- data.frame(ID = c('kmeans3','mclust6'), similar)
+
+similar_agg_plot <- similar[,-c(2:6)]
+fdata_similar <- melt(similar_agg_plot, id= "ID")
+fdata_similar <- arrange(fdata_similar, ID)
+fdata_similar$time <- seq(1,60, by= 1)
+
+ggplot(data=fdata_similar) +
+  geom_line(aes(x=time,y=value, colour = ID)) +
+  xlab("Time") + 
+  ylab("Mean Spirometry") +
+  labs(color = "Procedure", title = "Lung Capacity - Comparison") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+# Compare most dissilimiar clusters - 2
+similar2 <- rbind(cdata_agg[1,2:66],cdataBIC_agg[4,2:66])
+similar2 <- data.frame(ID = c('kmeans1','mclust4'), similar2)
+
+similar2_agg_plot <- similar2[,-c(2:6)]
+fdata_similar2 <- melt(similar2_agg_plot, id= "ID")
+fdata_similar2 <- arrange(fdata_similar2, ID)
+fdata_similar2$time <- seq(1,60, by= 1)
+
+ggplot(data=fdata_similar2) +
+  geom_line(aes(x=time,y=value, colour = ID)) +
+  xlab("Time") + 
+  ylab("Mean Spirometry") +
+  labs(color = "Procedure", title = "Lung Capacity - Comparison") +
+  theme(plot.title = element_text(hjust = 0.5))
